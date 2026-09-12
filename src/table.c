@@ -163,7 +163,11 @@ int makeTruthTable(char *_variables, char *_expression) {
 
   varaiblesAmount = strlen(variables);
   unsigned expressionLen = strlen(expression);
-  unsigned maxValue = pow(2, varaiblesAmount);
+
+  unsigned maxValue = 1;
+
+  for (unsigned i = 0; i < varaiblesAmount; i++)
+    maxValue *= 2;
 
   values = 0;
   chindex = 0;
