@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "solve.h"
 #include "table.h"
 
 void printHelp() {
@@ -40,10 +41,10 @@ int main(int argc, char *argv[]) {
   if (!strcmp(argv[1], "-h") || !strcmp(argv[1], "--help")) {
     printHelp();
     return 0;
-  } 
-  
+  }
+
   if (!strcmp(argv[1], "-t") || !strcmp(argv[1], "--table")) {
-    if (argc < 4) {
+    if (argc != 4) {
       printf("Error: not enough arguments. [%i]\n", argc);
       return 1;
     }
@@ -80,10 +81,54 @@ int main(int argc, char *argv[]) {
     }
 
     return makeTruthTable(argv[2], argv[3]);
-  } else {
-    printf("Error: bad argument. [%s]\n", argv[1]);
-    return 1;
   }
+
+  if (!strcmp(argv[1], "-s") || !strcmp(argv[1], "--solve")) {
+    if (argc == 3) {
+      unsigned expressionLength = strlen(argv[2]);
+
+      if (expressionLength > 64) {
+        printf("Error: expression is too long. [%u]\n", expressionLength);
+        return 1;
+      }
+
+      return solveExpr("", argv[2]);
+    } else if (argc == 4) {
+      unsigned variablesLen = strlen(argv[2]);
+
+      if (variablesLen % 2 == 1 || variablesLen > 16) {
+        printf("Error: bad variables length. [%u]\n", variablesLen);
+        return 1;
+      }
+
+      for (unsigned i = 0; i < variablesLen / 2; i++) {
+        if (!isalpha(argv[2][i * 2])) {
+          printf("Error: variable name must only be a letter. [%u]\n", i);
+          return 1;
+        }
+
+        if (argv[2][i * 2 + 1] != '0' && argv[2][i * 2 + 1] != '1') {
+          printf("Error: variable must have value of 0 or 1. [%u]\n", i);
+          return 1;
+        }
+      }
+
+      unsigned expressionLength = strlen(argv[3]);
+
+      if (expressionLength > 64) {
+        printf("Error: expression is too long. [%u]\n", expressionLength);
+        return 1;
+      }
+
+      return solveExpr(argv[2], argv[3]);
+    } else {
+      printf("Error: bad amount of variables. [%i]\n", argc);
+      return 1;
+    }
+  }
+
+  printf("Error: bad argument. [%s]\n", argv[1]);
+  return 1;
 
   return 0;
 }
