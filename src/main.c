@@ -37,10 +37,12 @@ int main(int argc, char *argv[]) {
     return 1;
   }
 
-  if (strcmp(argv[1], "-h") || strcmp(argv[1], "--help")) {
+  if (!strcmp(argv[1], "-h") || !strcmp(argv[1], "--help")) {
     printHelp();
     return 0;
-  } else if (strcmp(argv[1], "-t") || strcmp(argv[1], "--table")) {
+  } 
+  
+  if (!strcmp(argv[1], "-t") || !strcmp(argv[1], "--table")) {
     if (argc < 4) {
       printf("Error: not enough arguments. [%i]\n", argc);
       return 1;
@@ -48,8 +50,9 @@ int main(int argc, char *argv[]) {
 
     unsigned variablesAmount = strlen(argv[2]);
 
-    if (variablesAmount > 8) {
-      printf("Error: too many variables. [%u]\n", variablesAmount);
+    if (variablesAmount > 8 || variablesAmount == 0) {
+      printf("Error: variables amount can be in range [1-8]. [%u]\n",
+             variablesAmount);
       return 1;
     }
 
@@ -64,20 +67,21 @@ int main(int argc, char *argv[]) {
       for (unsigned j = 1; j < variablesAmount - i; j++) {
         if (argv[2][i] == argv[2][j]) {
           printf("Error: variable names must not repeat. [%u]\n", i);
+          return 1;
         }
       }
     }
 
     unsigned expressionLength = strlen(argv[3]);
 
-    if (expressionLength > 32) {
+    if (expressionLength > 64) {
       printf("Error: expression is too long. [%u]\n", expressionLength);
       return 1;
     }
 
     return makeTruthTable(argv[2], argv[3]);
   } else {
-    printf("Error: bad mode. [%s]\n", argv[1]);
+    printf("Error: bad argument. [%s]\n", argv[1]);
     return 1;
   }
 
