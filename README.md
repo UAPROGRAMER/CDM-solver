@@ -5,10 +5,11 @@ Computer Descreete Math Solver or CDMS is a crossplatform command line tool for 
 ## Usage
 
 For help run:\
-`./cdms` or `./cdms h`
+`./cdms -h` or `./cdms --help`
 
 For building a truth table run:\
-`./cdms t <variables> <expression>`
+`./cdms -t (variables) (expression)`\
+`./cdms -table (variables) (expression)`
 
 ## Truth table
 

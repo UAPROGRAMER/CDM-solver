@@ -6,17 +6,25 @@
 
 void printHelp() {
   printf("Usage:\n");
-  printf("\tcdms h -> prints help\n");
-  printf("\tcdms t [str of vars] [expression] -> builds a truth table\n\n");
+  printf("\tcdms [-h | --help]\n");
+  printf("\tcdms [-t | --table] (variables) (expression)\n\n");
+
+  printf("Arguments:\n");
+  printf("\t-h, --help - Prints help.\n");
+  printf("\t-t, --table - Solves expression for every possible variable value "
+         "and builds truth table.\n\n");
+
   printf("Variables:\n");
   printf("\tA string of consecutive non-repeating case-sencetive letters.\n");
   printf("\tMax of 8 variables are allowed for the truth table.\n\n");
+
   printf("Expressions:\n");
   printf("\tUnary operators: !\n");
   printf("\tBinary operators: & | > ^ =\n");
   printf("\tOperators precedence: ! & | > ^ =\n");
   printf("\tParens are allowed and have the highest precedence.\n");
   printf("\tMax expression length is 32.\n\n");
+
   printf("Autor:\n\tStanislav Yatskiv\n\n");
   printf(
       "Contact info:\n\tgithub.com/UAPROGRAMER\n\tstasyatskiu2008@gmail.com\n");
@@ -29,18 +37,10 @@ int main(int argc, char *argv[]) {
     return 1;
   }
 
-  if (strlen(argv[1]) != 1) {
-    printf("Error: mode must be 1 char. [%s]\n", argv[1]);
-    return 1;
-  }
-
-  char mode = argv[1][0];
-
-  switch (mode) {
-  case 'h':
+  if (strcmp(argv[1], "-h") || strcmp(argv[1], "--help")) {
     printHelp();
     return 0;
-  case 't':
+  } else if (strcmp(argv[1], "-t") || strcmp(argv[1], "--table")) {
     if (argc < 4) {
       printf("Error: not enough arguments. [%i]\n", argc);
       return 1;
@@ -76,8 +76,8 @@ int main(int argc, char *argv[]) {
     }
 
     return makeTruthTable(argv[2], argv[3]);
-  default:
-    printf("Error: bad mode. [%c]\n", mode);
+  } else {
+    printf("Error: bad mode. [%s]\n", argv[1]);
     return 1;
   }
 
