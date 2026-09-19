@@ -5,11 +5,18 @@ Computer Descreete Math Solver or CDMS is a crossplatform command line tool for 
 ## Usage
 
 For help run:\
-`./cdms -h` or `./cdms --help`
+`./cdms -h`\
+`./cdms --help`
 
 For building a truth table run:\
 `./cdms -t (variables) (expression)`\
-`./cdms -table (variables) (expression)`
+`./cdms --table (variables) (expression)`
+
+For solving an expression run:\
+`./cdms -s (expression)`\
+`./cdms -s (variables) (expression)`\
+`./cdms --solve (expression)`\
+`./cdms --solve (variables) (expression)`
 
 ## Truth table
 
@@ -22,6 +29,19 @@ Max of 8 variables at the same time are allowed.
 Variables are case-sencetive and must not repeat.
 
 \<expression\> - expression to calculate in a specific format.
+
+## Solve
+
+Optional: \<variables\> - a string of non-repeating case-sencetive letters with corresponding value.\
+Example "p1q0t1".
+
+Max of 8 variables at the same time are allowed.
+
+Variables are case-sencetive and must not repeat.
+
+\<expression\> - expression to calculate in a specific format.
+
+## Expressions
 
 Expression can include:
 - Unary operations:
@@ -52,6 +72,11 @@ When calculating operator precedence is followed.
   <img src="docs/images/not.png" alt="not">
   <img src="docs/images/and.png" alt="and">
   <img src="docs/images/expr.png" alt="expr">
+</div>
+
+<div align="center">
+  <img src="docs/images/solve1.png" alt="not">
+  <img src="docs/images/solve2.png" alt="not">
 </div>
 
 ## License

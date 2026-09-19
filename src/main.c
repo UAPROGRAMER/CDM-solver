@@ -8,16 +8,25 @@
 void printHelp() {
   printf("Usage:\n");
   printf("\tcdms [-h | --help]\n");
-  printf("\tcdms [-t | --table] (variables) (expression)\n\n");
+  printf("\tcdms [-t | --table] (variables) (expression)\n");
+  printf("\tcdms [-s | --solve] (expression)\n");
+  printf("\tcdms [-s | --solve] (variables) (expression)\n\n");
 
   printf("Arguments:\n");
   printf("\t-h, --help - Prints help.\n");
   printf("\t-t, --table - Solves expression for every possible variable value "
-         "and builds truth table.\n\n");
+         "and builds truth table.\n");
+  printf("\t-s, --solve - Solves expression for specified variable value if "
+         "any.\n\n");
 
-  printf("Variables:\n");
+  printf("Table variables:\n");
   printf("\tA string of consecutive non-repeating case-sencetive letters.\n");
-  printf("\tMax of 8 variables are allowed for the truth table.\n\n");
+  printf("\tMax of 8 variables are allowed.\n\n");
+
+  printf("Solve variables:\n");
+  printf("\tA string of non-repeating case-sencetive letters and a "
+         "corresponding value: 0 or 1.\n");
+  printf("\tMax of 8 variables are allowed.\n\n");
 
   printf("Expressions:\n");
   printf("\tUnary operators: !\n");
@@ -110,6 +119,15 @@ int main(int argc, char *argv[]) {
         if (argv[2][i * 2 + 1] != '0' && argv[2][i * 2 + 1] != '1') {
           printf("Error: variable must have value of 0 or 1. [%u]\n", i);
           return 1;
+        }
+      }
+
+      for (unsigned i = 0; i < variablesLen / 2; i++) {
+        for (unsigned j = 1; j < variablesLen / 2 - i; j++) {
+          if (argv[2][i * 2] == argv[2][j * 2]) {
+            printf("Error: variable names must not repeat. [%u]\n", i);
+            return 1;
+          }
         }
       }
 
